@@ -39,6 +39,8 @@ class MicroBattles extends PluginBase {
 
     public function onLoad() {
        @mkdir($this->getDataFolder());
+       $this->saveDefaultConfig();
+       $this->saveResource("config.yml");
     }
 
     public function onEnable() {
@@ -53,9 +55,13 @@ class MicroBattles extends PluginBase {
     private function loadEconomy() {
         try {
             $conf = new Config($this->getDataFolder() . "config.yml", Config::YAML);
-            $ecoSettings = $conf->get("economy")["enabled"];
+            $ecoSettings = $conf->get("economy", "enabled");
 
-            var_dump($ecoSettings);
+            var_dump($ecoSettings["enabled"]);
+
+            if ($ecoSettings["enabled"] === true) {
+                //TODO: Finish Code.
+            }
 
         } catch (Exception $exception) {
             $this->getLogger()->error("There was an error while enabling economy! Would you mind checking your config?");
