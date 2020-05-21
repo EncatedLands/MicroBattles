@@ -34,6 +34,9 @@ class MicroBattles extends PluginBase {
     /** @var string $prefix */
     public $prefix = C::BOLD . C::AQUA . "M" . C::GREEN . "B" . C::DARK_GRAY . "» ";
 
+    /** @var bool|mixed $arenas */
+    public $arenas;
+
     /** @var Utils $utils */
     public $utils;
 
@@ -50,6 +53,20 @@ class MicroBattles extends PluginBase {
 
         $this->utils = new Utils($this);
         $this->utils->isSpoon();
+    }
+
+    private function loadArenas() {
+        try {
+            $conf = new Config($this->getDataFolder() . "arenas.yml", Config::YAML);
+            $this->arenas = $conf->get("arenas");
+
+            foreach ($this->arenas as $levelName) {
+                $this->getServer()->loadLevel($levelName);
+            }
+
+        } catch (Exception $exception) {
+            $this->getLogger()->error("There was an error while loading arenas!");
+        }
     }
 
     private function loadEconomy() {
