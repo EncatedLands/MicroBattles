@@ -19,15 +19,47 @@ declare(strict_types=1);
 
 namespace therealkizu\microbattles;
 
+use Exception;
 use pocketmine\plugin\PluginBase;
+use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as C;
+use therealkizu\microbattles\utils\Utils;
 
+/**
+ * Class MicroBattles
+ * @package therealkizu\microbattles
+ */
 class MicroBattles extends PluginBase {
 
+    /** @var string $prefix */
     public $prefix = C::BOLD . C::AQUA . "M" . C::GREEN . "B" . C::DARK_GRAY . "» ";
 
-    public function onEnable() {
+    /** @var Utils $utils */
+    public $utils;
 
+    public function onLoad() {
+       @mkdir($this->getDataFolder());
+    }
+
+    public function onEnable() {
+        $this->getLogger()->info("MicroBattles enabled by TheRealKizu");
+
+        $this->loadEconomy();
+
+        $this->utils = new Utils($this);
+        $this->utils->isSpoon();
+    }
+
+    private function loadEconomy() {
+        try {
+            $conf = new Config($this->getDataFolder() . "config.yml", Config::YAML);
+            $ecoSettings = $conf->get("economy")["enabled"];
+
+            var_dump($ecoSettings);
+
+        } catch (Exception $exception) {
+            $this->getLogger()->error("There was an error while enabling economy! Would you mind checking your config?");
+        }
     }
 
 }
