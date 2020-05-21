@@ -1,0 +1,9 @@
+name: MicroBattles
+main: therealkizu\microbattles\MicroBattles
+api:
+  - 3.0.0
+version: 1.0.0-beta1
+
+# Extra
+author: TheRealKizu
+description: A MicroBattle minigame plugin for PocketMine-MP
