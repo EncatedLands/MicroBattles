@@ -4,6 +4,10 @@
 <!--- SUBTITLE --->
 <p align="center">✅ A MicroBattle minigame plugin for PocketMine-MP </p>
 
+<!--- NOTE -->
+
+**Note:** This plugin is not yet finished. Use at your own risk.
+
 <!--- INSTALLATION --->
 ### Installation
 
@@ -24,4 +28,4 @@
 
 Suggestions? Bugs? Need help? Join my discord server down below!
 
-<a href="https://discord.gg/BhWAFJP"><img src="https://discordapp.com/api/guilds/657160854273261578/embed.png" alt="Discord Server"/></a>
+<a href="https://discord.gg/4b3DHdJ"><img src="https://discordapp.com/api/guilds/638310885118574602/embed.png?style=banner2" alt="Discord Server"/></a>
