@@ -38,6 +38,8 @@ class EconomyAPIProvider implements EconomyProvider {
     public function __construct(EconomyManager $plugin) {
         $this->plugin = $plugin;
 
+        if (!class_exists(EconomyAPI::class)) return;
+
         try {
             $this->ecoAPI = EconomyAPI::getInstance();
         } catch (Exception $exception) {

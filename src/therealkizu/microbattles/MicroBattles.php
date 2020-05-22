@@ -61,20 +61,6 @@ class MicroBattles extends PluginBase {
         $this->utils->isSpoon();
     }
 
-    private function loadArenas() {
-        try {
-            $conf = new Config($this->getDataFolder() . "arenas.yml", Config::YAML);
-            $this->arenas = $conf->get("arenas");
-
-            foreach ($this->arenas as $levelName) {
-                $this->getServer()->loadLevel($levelName);
-            }
-
-        } catch (Exception $exception) {
-            $this->getLogger()->error("There was an error while loading arenas!");
-        }
-    }
-
     private function loadCommands() {
         $this->getServer()->getCommandMap()->registerAll("MicroBattles", [
             new MicroBattlesCommand($this),
@@ -89,7 +75,6 @@ class MicroBattles extends PluginBase {
             if ($ecoSettings["enabled"] === true) {
                 $this->ecoManager = new EconomyManager($this, $ecoSettings["provider"]);
             }
-
         } catch (Exception $exception) {
             $this->getLogger()->error("There was an error while enabling economy! Would you mind checking your config?");
         }
