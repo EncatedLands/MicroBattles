@@ -44,6 +44,8 @@ class EconomyManager {
     public function __construct(MicroBattles $plugin, string $ecoProvider) {
         $this->plugin = $plugin;
         $this->ecoProvider = $ecoProvider;
+
+        $this->checkProvider();
     }
 
     public function checkProvider() {
