@@ -21,8 +21,13 @@ namespace therealkizu\microbattles\commands;
 
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginCommand;
+use pocketmine\Player;
 use therealkizu\microbattles\MicroBattles;
 
+/**
+ * Class MicroBattlesCommand
+ * @package therealkizu\microbattles\commands
+ */
 class MicroBattlesCommand extends PluginCommand {
 
     /** @var MicroBattles $plugin */
@@ -36,13 +41,37 @@ class MicroBattlesCommand extends PluginCommand {
         $this->setAliases(["mb"]);
     }
 
-    public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
-        if (!$sender->hasPermission("mb.cmd.setup")) {
-            return false;
+    /**
+     * @param CommandSender $sender
+     * @param string $commandLabel
+     * @param array $args
+     * @return bool|mixed|void
+     */
+    public function execute(CommandSender $sender, string $commandLabel, array $args) {
+        if (!$sender->hasPermission("mb.cmd")) {
+            return;
         }
 
-        //TODO: Finish this
-        return true;
+        if (!isset($args[0])) {
+            $sender->sendMessage(MicroBattles::PREFIX . "§aUsage: §b/mb help");
+            return;
+        }
+
+        if ($sender instanceof Player) {
+            switch ($args[0]) {
+                case "help":
+                    if (!$sender->hasPermission("mb.help")) {
+                        $sender->sendMessage(MicroBattles::PREFIX . "§aYou don't have permissions to use this command!");
+                        return;
+                    }
+
+                    $sender->sendMessage(MicroBattles::PREFIX . "§aComing §bSoon!");
+                    break;
+                default:
+                    $sender->sendMessage(MicroBattles::PREFIX . "§aUsage: §b/mb help");
+                    return;
+            }
+        }
     }
 
 }

@@ -23,6 +23,8 @@ use Exception;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as C;
+use therealkizu\microbattles\commands\MicroBattlesCommand;
+use therealkizu\microbattles\provider\economy\EconomyManager;
 use therealkizu\microbattles\utils\Utils;
 
 /**
@@ -31,14 +33,17 @@ use therealkizu\microbattles\utils\Utils;
  */
 class MicroBattles extends PluginBase {
 
-    /** @var string $prefix */
-    public $prefix = C::BOLD . C::AQUA . "M" . C::GREEN . "B" . C::DARK_GRAY . "» ";
+    const PREFIX = C::BOLD . C::AQUA . "M" . C::GREEN . "B" . C::DARK_GRAY . "» ";
+
+    /** @var EconomyManager $ecoManager */
+    public $ecoManager = null;
 
     /** @var bool|mixed $arenas */
     public $arenas;
 
     /** @var Utils $utils */
     public $utils;
+
 
     public function onLoad() {
        @mkdir($this->getDataFolder());
@@ -49,6 +54,7 @@ class MicroBattles extends PluginBase {
     public function onEnable() {
         $this->getLogger()->info("MicroBattles enabled by TheRealKizu");
 
+        $this->loadCommands();
         $this->loadEconomy();
 
         $this->utils = new Utils($this);
@@ -69,15 +75,19 @@ class MicroBattles extends PluginBase {
         }
     }
 
+    private function loadCommands() {
+        $this->getServer()->getCommandMap()->registerAll("MicroBattles", [
+            new MicroBattlesCommand($this),
+        ]);
+    }
+
     private function loadEconomy() {
         try {
             $conf = new Config($this->getDataFolder() . "config.yml", Config::YAML);
-            $ecoSettings = $conf->get("economy", "enabled");
-
-            var_dump($ecoSettings["enabled"]);
+            $ecoSettings = $conf->get("economy");
 
             if ($ecoSettings["enabled"] === true) {
-                //TODO: Finish Code.
+                $this->ecoManager = new EconomyManager($this, $ecoSettings["provider"]);
             }
 
         } catch (Exception $exception) {

@@ -7,3 +7,13 @@ version: 1.0.0-beta1
 # Extra
 author: TheRealKizu
 description: A MicroBattle minigame plugin for PocketMine-MP
+website: https://github.com/TheRealKizu/MicroBattles
+
+permissions:
+  mb.cmd:
+    description: Permission to all MicroBattles commands
+    default: op
+    children:
+      mb.cmd.help:
+        description: Permission for /mb help
+        default: op
